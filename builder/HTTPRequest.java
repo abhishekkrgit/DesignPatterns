@@ -11,7 +11,7 @@ class HTTPRequest {
     private final String body;
     private final int timeOut;
 
-    private HTTPRequest(final HTTPRequestBuilder builder) {
+    private HTTPRequest(final Builder builder) {
         this.url = builder.url;
         this.method = builder.method;
         this.headers =  Collections.unmodifiableMap(new HashMap<>(builder.headers));
@@ -20,11 +20,7 @@ class HTTPRequest {
         this.timeOut = builder.timeOut; 
     }
 
-    public static HTTPRequestBuilder builder(String url, String method) {
-        return new HTTPRequestBuilder(url, method);
-    }
-
-    public static class HTTPRequestBuilder {
+    public static class Builder {
         private  String url;
         private  String method;
         private  Map<String, String>headers ;
@@ -32,37 +28,37 @@ class HTTPRequest {
         private  String body;
         private  int timeOut;
 
-        HTTPRequestBuilder(final String url, final String method){
+        Builder(final String url, final String method){
             this.url = url;
             this.method = method;
             headers = new HashMap<>();
             queryParams = new HashMap<>();
         }
 
-        public HTTPRequestBuilder method(final String method){
+        public Builder method(final String method){
             this.method = method;
             return this;
         }
 
-        public HTTPRequestBuilder addHeaders(Map<String, String>headers) {
+        public Builder addHeaders(Map<String, String>headers) {
             for(String key: headers.keySet()){
                 this.headers.put(key, headers.get(key));
             }
             return this;
         }
-        public HTTPRequestBuilder addQueryParams(Map<String, String>queryParams) {
+        public Builder addQueryParams(Map<String, String>queryParams) {
             for(String key: queryParams.keySet()){
                 this.queryParams.put(key, queryParams.get(key));
             }
             return this;
         }
 
-        public HTTPRequestBuilder body (final String body){
+        public Builder body (final String body){
             this.body = body;
             return this;
         }
 
-        public HTTPRequestBuilder timeOut(final int timeOut){
+        public Builder timeOut(final int timeOut){
             this.timeOut = timeOut;
             return this;
         }
