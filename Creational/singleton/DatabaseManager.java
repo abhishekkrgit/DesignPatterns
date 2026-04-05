@@ -1,3 +1,4 @@
+package creational.singleton;
 public class DatabaseManager {
 
     // 1. Private constructor prevents instantiation from other classes
