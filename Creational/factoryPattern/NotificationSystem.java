@@ -1,4 +1,4 @@
-package factoryPattern;
+package creational.factoryPattern;
 
 import java.util.HashMap;
 import java.util.Map;

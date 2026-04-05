@@ -1,3 +1,4 @@
+package creational.singleton;
 public enum DatabaseService {
     // 1. The Single Instance
     // This is thread-safe and protected against Reflection/Serialization by the JVM.

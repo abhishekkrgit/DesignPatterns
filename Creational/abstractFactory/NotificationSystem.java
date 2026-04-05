@@ -1,4 +1,4 @@
-package abstractFactory;
+package creational.abstractFactory;
 
 import java.util.Objects;
 
