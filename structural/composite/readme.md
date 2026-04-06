@@ -1,62 +1,61 @@
-```markdown
-# The Composite Design Pattern
+# Composite Design Pattern
 
-The **Composite Pattern** is a structural design pattern that allows you to compose objects into tree structures to represent part-whole hierarchies. It lets clients treat individual objects and compositions of objects uniformly.
-
-Think of it like a file system: a **Folder** (Composite) can contain **Files** (Leaf) or other **Folders** (Composite). Whether you are calculating the total size of a file or a folder, you want to call the same method without caring about the difference.
+The **Composite Design Pattern** is a structural design pattern that allows you to compose objects into tree structures to represent part-whole hierarchies. It lets clients treat individual objects and compositions of objects uniformly.
 
 ---
 
-## 1. Core Concepts
+## 🏗️ Core Concept
 
-* **Component**: The base interface or abstract class that defines common operations for both simple and complex objects.
-* **Leaf**: The basic building block of the composition. It has no children and implements the behavior for the primitive objects.
-* **Composite**: The complex object that has children (Leafs or other Composites). It implements methods to manipulate children and delegates work to them.
-* **Client**: Manipulates objects in the composition through the Component interface.
+Imagine a file system. A **File** is an individual object, and a **Folder** is a container that can hold both **Files** and other **Folders**. In code, if you want to calculate the total size of a folder, you shouldn't care if you are looking at a single file or a sub-folder—you just want to call `getSize()`.
 
----
-
-## 2. When to Use It
-
-* When you need to represent a **tree-like hierarchy** of objects.
-* When you want the client code to **ignore the difference** between individual objects and collections of objects.
-* When you want to simplify client code by providing a **single interface** for all elements in the tree.
+### Key Participants
+1. **Component**: An interface or abstract class that defines operations common to both simple and complex objects (e.g., `execute()`, `getSize()`).
+2. **Leaf**: A basic element that has no children. It implements the Component interface.
+3. **Composite**: A container that stores child components (Leafs or other Composites). It implements the Component interface by delegating work to its children.
 
 ---
 
-## 3. Implementation in Java
+## 💻 Code Example: File System (Java)
 
-In this example, we represent a **FileSystem**. A `File` is a Leaf, and a `Directory` is a Composite.
+This is a standard LLD implementation showing how the pattern handles recursive structures.
 
 ```java
 import java.util.ArrayList;
 import java.util.List;
 
-// 1. The Component Interface
+// 1. Component
 interface FileSystemComponent {
     void showDetails();
+    long getSize();
 }
 
-// 2. The Leaf (Individual Object)
+// 2. Leaf
 class File implements FileSystemComponent {
     private String name;
+    private long size;
 
-    public File(String name) {
+    public File(String name, long size) {
         this.name = name;
+        this.size = size;
     }
 
     @Override
     public void showDetails() {
-        System.out.println("File: " + name);
+        System.out.println("File: " + name + " (" + size + "KB)");
+    }
+
+    @Override
+    public long getSize() {
+        return size;
     }
 }
 
-// 3. The Composite (Object containing children)
-class Directory implements FileSystemComponent {
+// 3. Composite
+class Folder implements FileSystemComponent {
     private String name;
     private List<FileSystemComponent> components = new ArrayList<>();
 
-    public Directory(String name) {
+    public Folder(String name) {
         this.name = name;
     }
 
@@ -64,59 +63,16 @@ class Directory implements FileSystemComponent {
         components.add(component);
     }
 
-    public void removeComponent(FileSystemComponent component) {
-        components.remove(component);
-    }
-
     @Override
     public void showDetails() {
-        System.out.println("Directory: " + name);
+        System.out.println("--- Folder: " + name + " ---");
         for (FileSystemComponent component : components) {
-            // Uniformly calling the method regardless of type
             component.showDetails();
         }
     }
-}
 
-// 4. Usage
-public class Main {
-    public static void main(String[] args) {
-        // Create individual files (Leafs)
-        FileSystemComponent file1 = new File("resume.pdf");
-        FileSystemComponent file2 = new File("photo.jpg");
-        FileSystemComponent file3 = new File("notes.txt");
-
-        // Create directories (Composites)
-        Directory root = new Directory("Root");
-        Directory documents = new Directory("Documents");
-        Directory images = new Directory("Images");
-
-        // Build the tree structure
-        root.addComponent(documents);
-        root.addComponent(images);
-
-        documents.addComponent(file1);
-        documents.addComponent(file3);
-        images.addComponent(file2);
-
-        // Display the entire structure uniformly
-        root.showDetails();
+    @Override
+    public long getSize() {
+        return components.stream().mapToLong(FileSystemComponent::getSize).sum();
     }
 }
-```
-
----
-
-## 4. Key Advantages
-
-* **Simplifies Client Code**: The client doesn't need to check whether an object is a leaf or a composite.
-* **Easier to add new types**: You can add new Component subclasses without changing existing code.
-* **Recursive Structure**: It naturally handles nested structures of any depth.
-
----
-
-## 5. Potential Drawbacks
-
-* **Over-generalization**: It can make the design too general. It’s hard to restrict the components of a composite to only certain types at compile time.
-* **Complexity**: For very simple hierarchies, this pattern might be overkill.
-```
