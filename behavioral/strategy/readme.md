@@ -162,4 +162,3 @@ public class Main {
 The **Strategy Pattern** promotes flexibility, scalability, and clean code by decoupling algorithms from the context in which they are used. It’s especially useful when behavior needs to change dynamically at runtime.
 
 ```
-```
