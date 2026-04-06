@@ -86,14 +86,13 @@ class ShippingManagementService {
         this.shippingStrategy = shippingStrategy;
     }
 
-    public double calculateShippingCost(Order order) {
+    public void calculateShippingCost(Order order) {
         if(Objects.isNull(shippingStrategy)) {
             throw new IllegalStateException("Shipping strategy is not set.");
         }
         double cost = shippingStrategy.calculateCost(order);
         String formattedCost = String.format("%.2f", cost);
         System.out.println("ShippingManagementService:  final Calculated shipping cost: " + formattedCost);
-        return cost;
     }
 }
 
@@ -108,13 +107,14 @@ public class EcommerceApp {
         ShippingStrategy distStrategy = new DistanceBasedStrategy(10.0 );
 
         ShippingManagementService shippingManagementService = new ShippingManagementService(flatStrategy);
-        double cost = shippingManagementService.calculateShippingCost(order2);
+        shippingManagementService.calculateShippingCost(order2);
 
         shippingManagementService.setShippingStrategy(distStrategy);
-        cost = shippingManagementService.calculateShippingCost(order1);
-        cost = shippingManagementService.calculateShippingCost(order2);
+        shippingManagementService.calculateShippingCost(order1);
+
+        shippingManagementService.calculateShippingCost(order2);
 
         shippingManagementService.setShippingStrategy(weightBasedStrategy);
-        cost = shippingManagementService.calculateShippingCost(order2);
+        shippingManagementService.calculateShippingCost(order2);
     }
 }
