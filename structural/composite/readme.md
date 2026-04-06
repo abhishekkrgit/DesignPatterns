@@ -8,6 +8,7 @@ Think of it like a file system: a **Folder** (Composite) can contain **Files** (
 ---
 
 ## 1. Core Concepts
+
 * **Component**: The base interface or abstract class that defines common operations for both simple and complex objects.
 * **Leaf**: The basic building block of the composition. It has no children and implements the behavior for the primitive objects.
 * **Composite**: The complex object that has children (Leafs or other Composites). It implements methods to manipulate children and delegates work to them.
@@ -16,9 +17,10 @@ Think of it like a file system: a **Folder** (Composite) can contain **Files** (
 ---
 
 ## 2. When to Use It
-* When you need to represent a tree-like hierarchy of objects.
-* When you want the client code to ignore the difference between individual objects and collections of objects.
-* When you want to simplify client code by providing a single interface for all elements in the tree.
+
+* When you need to represent a **tree-like hierarchy** of objects.
+* When you want the client code to **ignore the difference** between individual objects and collections of objects.
+* When you want to simplify client code by providing a **single interface** for all elements in the tree.
 
 ---
 
@@ -101,10 +103,12 @@ public class Main {
         root.showDetails();
     }
 }
+```
 
 ---
 
 ## 4. Key Advantages
+
 * **Simplifies Client Code**: The client doesn't need to check whether an object is a leaf or a composite.
 * **Easier to add new types**: You can add new Component subclasses without changing existing code.
 * **Recursive Structure**: It naturally handles nested structures of any depth.
@@ -112,6 +116,7 @@ public class Main {
 ---
 
 ## 5. Potential Drawbacks
+
 * **Over-generalization**: It can make the design too general. It’s hard to restrict the components of a composite to only certain types at compile time.
 * **Complexity**: For very simple hierarchies, this pattern might be overkill.
 ```
