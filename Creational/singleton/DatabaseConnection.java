@@ -1,3 +1,4 @@
+package creational.singleton;
 public class DatabaseConnection {
     // 1. MUST BE VOLATILE
     // Prevents instruction reordering and ensures memory visibility.
