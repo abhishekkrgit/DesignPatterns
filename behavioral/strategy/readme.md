@@ -1,8 +1,8 @@
-```markdown
+````md
 # Strategy Design Pattern
 
 ## 📌 Overview
-The **Strategy Design Pattern** is a behavioral design pattern that allows you to define a family of algorithms, encapsulate each one in a separate class, and make them interchangeable at runtime. 
+The **Strategy Design Pattern** is a behavioral design pattern that allows you to define a family of algorithms, encapsulate each one in a separate class, and make them interchangeable at runtime.
 
 Instead of using massive `if-else` or `switch` blocks to select a behavior, the **Context** delegates the work to a **Strategy** object.
 
@@ -12,109 +12,154 @@ Instead of using massive `if-else` or `switch` blocks to select a behavior, the 
 
 The pattern is composed of three main parts:
 
-1.  **Strategy Interface**: Defines a common contract for all supported versions of an algorithm.
-2.  **Concrete Strategies**: Implements different variations of the algorithm (e.g., Credit Card, PayPal, Crypto).
-3.  **Context**: Maintains a reference to one of the concrete strategies and communicates with it only via the strategy interface.
+1. **Strategy Interface**  
+   Defines a common contract for all supported versions of an algorithm.
 
+2. **Concrete Strategies**  
+   Implements different variations of the algorithm (e.g., Credit Card, PayPal, Crypto).
 
+3. **Context**  
+   Maintains a reference to one of the concrete strategies and communicates with it only via the strategy interface.
 
 ---
 
 ## ⚖️ Why Use the Strategy Pattern?
 
 ### 1. Eliminates Conditional Logic
-It replaces complex conditional statements used to select a behavior with **Polymorphism**. This makes the code cleaner and easier to read.
+Replaces complex conditional statements with **polymorphism**, making the code cleaner and easier to maintain.
 
 ### 2. Open/Closed Principle
-You can introduce new algorithms (strategies) without having to change the **Context** or existing strategies. The system is "Open for extension, but closed for modification."
+You can introduce new strategies without modifying existing code. The system is **open for extension but closed for modification**.
 
 ### 3. Separation of Concerns
-The business logic (Context) is separated from the implementation details of the algorithms (Strategies).
+Separates the business logic (**Context**) from algorithm implementations (**Strategies**).
 
 ### 4. Runtime Interchangeability
-You can swap the behavior of an object while the application is running based on user input or environmental factors.
+Allows switching behavior dynamically at runtime based on user input or system conditions.
 
 ---
 
 ## 🚀 Benefits vs. Trade-offs
 
-| Feature | Strategy Pattern Benefit |
-| :--- | :--- |
-| **Maintenance** | Low risk of breaking existing code when adding new features. |
-| **Testing** | Each strategy can be unit-tested in isolation. |
-| **Flexibility** | Switch behaviors dynamically without restarting the app. |
-| **Complexity** | *Trade-off:* Increases the total number of classes in the project. |
+| Feature        | Strategy Pattern Impact |
+|----------------|------------------------|
+| **Maintenance** | Low risk when adding new features |
+| **Testing**     | Strategies can be unit tested independently |
+| **Flexibility** | Behaviors can be switched dynamically |
+| **Complexity**  | ⚠️ Increases number of classes |
 
 ---
 
 ## 🛠️ Complete Implementation (Java)
 
-Here is a full example of a **Payment Processing System** using the Strategy Pattern.
-
-### 1. The Strategy Interface
+### 1. Strategy Interface
 ```java
 public interface PaymentStrategy {
     void processPayment(double amount);
 }
-```
+````
+
+---
 
 ### 2. Concrete Strategies
-```java
-// Strategy A: Credit Card
-public class CreditCardPayment implements PaymentStrategy {
-    @Override
-    public void processPayment(double amount) {
-        System.out.println("Paid " + amount + " using Credit Card.");
-    }
-}
 
-// Strategy B: PayPal
-public class PayPalPayment implements PaymentStrategy {
-    @Override
+```java
+public class CreditCardPayment implements PaymentStrategy {
     public void processPayment(double amount) {
-        System.out.println("Paid " + amount + " using PayPal.");
+        System.out.println("Paid " + amount + " using Credit Card");
     }
 }
 ```
 
-### 3. The Context
 ```java
-public class CheckoutService {
+public class PayPalPayment implements PaymentStrategy {
+    public void processPayment(double amount) {
+        System.out.println("Paid " + amount + " using PayPal");
+    }
+}
+```
+
+```java
+public class CryptoPayment implements PaymentStrategy {
+    public void processPayment(double amount) {
+        System.out.println("Paid " + amount + " using Cryptocurrency");
+    }
+}
+```
+
+---
+
+### 3. Context Class
+
+```java
+public class PaymentContext {
     private PaymentStrategy paymentStrategy;
 
-    // The strategy is injected here
     public void setPaymentStrategy(PaymentStrategy strategy) {
         this.paymentStrategy = strategy;
     }
 
-    public void executeCheckout(double amount) {
+    public void pay(double amount) {
         if (paymentStrategy == null) {
-            System.out.println("Please select a payment method!");
-            return;
+            throw new IllegalStateException("Payment strategy not set");
         }
         paymentStrategy.processPayment(amount);
     }
 }
 ```
 
-### 4. Client Code (Usage)
+---
+
+### 4. Client Code
+
 ```java
 public class Main {
     public static void main(String[] args) {
-        CheckoutService checkout = new CheckoutService();
+        PaymentContext context = new PaymentContext();
 
-        // User selects PayPal at runtime
-        checkout.setPaymentStrategy(new PayPalPayment());
-        checkout.executeCheckout(150.00);
+        context.setPaymentStrategy(new CreditCardPayment());
+        context.pay(1000);
 
-        // User changes mind to Credit Card
-        checkout.setPaymentStrategy(new CreditCardPayment());
-        checkout.executeCheckout(200.00);
+        context.setPaymentStrategy(new PayPalPayment());
+        context.pay(500);
+
+        context.setPaymentStrategy(new CryptoPayment());
+        context.pay(200);
     }
 }
 ```
 
 ---
-## 🏁 Conclusion
-The Strategy Pattern is a "must-know" for LLD interviews. It is the best solution when you have multiple ways of performing a task and want to keep your code decoupled, testable, and scalable.
+
+## 🧠 When to Use Strategy Pattern
+
+* When you have multiple ways to perform a task
+* When you want to avoid large conditional statements
+* When algorithms may change frequently
+* When you want runtime flexibility
+
+---
+
+## ❌ When NOT to Use
+
+* If you only have 1–2 simple algorithms
+* When adding extra classes increases unnecessary complexity
+* When behavior rarely changes
+
+---
+
+## 🧩 Real-World Examples
+
+* Payment methods in e-commerce apps
+* Sorting algorithms (quick sort, merge sort, etc.)
+* Compression strategies (ZIP, RAR)
+* Navigation systems (car, walking, biking routes)
+
+---
+
+## 🔚 Summary
+
+The **Strategy Pattern** promotes flexibility, scalability, and clean code by decoupling algorithms from the context in which they are used. It’s especially useful when behavior needs to change dynamically at runtime.
+
+```
 ```
