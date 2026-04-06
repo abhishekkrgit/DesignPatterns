@@ -1,9 +1,12 @@
 package structural.composite;
+
 import java.util.*;
 
 interface FileSystemItems {
     int getSize();
+
     void printStructure(String indent);
+
     void delete();
 }
 
@@ -11,13 +14,13 @@ class File implements FileSystemItems {
     private String name;
     private int size;
 
-    public File(String name, int size ) {
+    public File(String name, int size) {
         this.name = name;
         this.size = size;
     }
 
     @Override
-    public int getSize(){
+    public int getSize() {
         return size;
     }
 
@@ -29,12 +32,12 @@ class File implements FileSystemItems {
     @Override
     public void delete() {
         System.out.println("deleting file: " + name);
-    } 
+    }
 }
 
 class Folder implements FileSystemItems {
     private String name;
-    private final List<FileSystemItems>items = new ArrayList<>();;
+    private final List<FileSystemItems> items = new ArrayList<>();;
 
     public Folder(String name) {
         this.name = name;
@@ -43,7 +46,7 @@ class Folder implements FileSystemItems {
     @Override
     public int getSize() {
         int totalSize = 0;
-        for(FileSystemItems item: items){
+        for (FileSystemItems item : items) {
             totalSize += item.getSize();
         }
         return totalSize;
@@ -60,14 +63,14 @@ class Folder implements FileSystemItems {
     @Override
     public void printStructure(String indent) {
         System.out.println(indent + "+ " + name + "/");
-        for(FileSystemItems item: items) {
-            item.printStructure( indent + " ");
+        for (FileSystemItems item : items) {
+            item.printStructure(indent + " ");
         }
     }
 
     @Override
     public void delete() {
-        for(FileSystemItems item: items){
+        for (FileSystemItems item : items) {
             item.delete();
         }
         System.out.println("Folder " + name + " deleted..");
@@ -85,7 +88,7 @@ public class FileExplorerApp {
         photos.addItems(nope);
 
         Folder documents = new Folder("documents");
-        File resume  = new File("Resume.pdf", 10);
+        File resume = new File("Resume.pdf", 10);
         File offerLetter = new File("OfferLetter.pdf", 20);
         documents.addItems(resume);
         documents.addItems(offerLetter);
@@ -97,5 +100,5 @@ public class FileExplorerApp {
 
         System.out.println("\nTotal Size: " + home.getSize());
     }
-    
+
 }
