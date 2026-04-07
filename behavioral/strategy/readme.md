@@ -1,17 +1,3 @@
-Perfect — for a **GitHub README**, things are much stricter but also predictable 👍
-
-### 🔥 Key Rules for GitHub Markdown
-
-1. **Never wrap your whole file in ```md** → just write raw markdown
-2. Use **```java** for code blocks (works perfectly)
-3. `**bold**` ✅ works in GitHub (no issue there)
-4. Don’t use HTML for font-size → GitHub strips most styling
-
----
-
-## ✅ Final GitHub-Ready `.md` (clean + safe)
-
-Just copy-paste this directly into your `README.md` (no outer backticks):
 
 ````md
 # Strategy Design Pattern
