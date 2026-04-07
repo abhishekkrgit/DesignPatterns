@@ -1,9 +1,3 @@
-Got it 👍 — you want a **clean, GitHub-style README format** like your Decorator example (compact + single code block + no over-structuring).
-
-Here’s your **Strategy Pattern in the exact same style**:
-
----
-
 ````md
 # The Strategy Design Pattern
 
