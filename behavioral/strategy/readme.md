@@ -1,5 +1,5 @@
 
-````md
+```md
 # Strategy Design Pattern
 
 ## 📌 Overview
@@ -58,7 +58,7 @@ Allows switching behavior dynamically at runtime based on user input or system c
 public interface PaymentStrategy {
     void processPayment(double amount);
 }
-````
+```
 
 ---
 
