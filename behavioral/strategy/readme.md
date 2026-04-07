@@ -1,4 +1,3 @@
-````md
 # The Strategy Design Pattern
 
 The **Strategy Pattern** is a behavioral design pattern that allows you to define a family of algorithms, encapsulate each one, and make them interchangeable at runtime.
@@ -87,7 +86,6 @@ public class Main {
         context.pay(200);
     }
 }
-````
 
 ---
 
