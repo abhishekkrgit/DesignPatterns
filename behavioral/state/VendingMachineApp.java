@@ -1,4 +1,4 @@
-package DesignPatterns.behavioral.state;
+package designpatterns.behavioral.state;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
