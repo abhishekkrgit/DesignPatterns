@@ -6,7 +6,8 @@ import java.util.concurrent.Executors;
 /* 
 1. selectItem(VendingMachine context, string itemcode)
 2. insertMoney(VendingMachine context, int amount);
-3. dispenseItem(VendingMachine Context)
+3. dispenseItem(VendingMachine Context);
+4. reset() - to reset the machine to initial state after dispensing is done.
 */
 
 interface MachineState {
